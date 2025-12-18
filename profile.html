@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Amizone Dashboard Replica</title>
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+      :root {
+        --blue: #0b4f8a;
+        --light-blue: #1e88e5;
+        --sidebar-bg: #ffffff;
+        --border: #d9e2ec;
+        --card-radius: 6px;
+        --shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        --green: #2ecc71;
+        --yellow: #f1c40f;
+        --red: #e74c3c;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Roboto", sans-serif;
+        background: #f2f4f7;
+        color: #333;
+      }
+
+      /* ===== HEADER ===== */
+      .header {
+        height: 80px;
+        background: var(--blue);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+      }
+      .logo {
+        right: 50px;
+        background: #f9b000;
+        color: #003366;
+      }
+      .header-title {
+        font-size: 18px;
+        flex: 1;
+      }
+      .header-icons i {
+        margin: 0 10px;
+        cursor: pointer;
+      }
+      .profile {
+        display: flex;
+        align-items: center;
+        margin-left: 20px;
+      }
+      .profile img {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+
+      /* ===== SIDEBAR ===== */
+      .sidebar {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        bottom: 0;
+        width: 240px;
+        background: var(--sidebar-bg);
+        border-right: 1px solid var(--border);
+        overflow-y: auto;
+      }
+      .sidebar ul {
+        list-style: none;
+      }
+      .sidebar li {
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      .sidebar li.active,
+      .sidebar li:hover {
+        background: #e8f1fb;
+        border-left: 4px solid var(--light-blue);
+      }
+
+      /* ===== MAIN CONTENT ===== */
+      .main {
+        margin-left: 240px;
+        padding: 90px 20px 30px;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      .card {
+        background: #fff;
+        border-radius: var(--card-radius);
+        box-shadow: var(--shadow);
+        padding: 16px;
+        position: relative;
+      }
+
+      .card h3 {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      .attendance-card {
+        background: #3ddc97;
+        color: #fff;
+      }
+      .fee-card {
+        background: #ff6f7d;
+        color: #fff;
+      }
+      .achievement-card {
+        background: #5fa8ff;
+        color: #fff;
+      }
+      .cgpa-card {
+        background: #ffbf69;
+        color: #fff;
+      }
+
+      .btn {
+        background: #f9b000;
+        border: none;
+        padding: 8px 14px;
+        color: #333;
+        cursor: pointer;
+        border-radius: 4px;
+        margin-top: 10px;
+      }
+
+      /* ===== SECTIONS ===== */
+      .section {
+        background: #fff;
+        border-radius: var(--card-radius);
+        box-shadow: var(--shadow);
+        margin-bottom: 20px;
+      }
+      .section-header {
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border);
+        font-weight: 500;
+      }
+      .section-body {
+        padding: 16px;
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 16px;
+      }
+
+      .attendance-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      .circle {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 4px solid var(--red);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      /* ===== LOWER GRID ===== */
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 16px;
+      }
+
+      /* ===== RESPONSIVE ===== */
+      @media (max-width: 1200px) {
+        .cards {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .two-col {
+          grid-template-columns: 1fr;
+        }
+        .grid-3 {
+          grid-template-columns: 1fr;
+        }
+        .grid-2 {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 768px) {
+        .sidebar {
+          width: 200px;
+        }
+        .main {
+          margin-left: 200px;
+        }
+      }
+      @media (max-width: 600px) {
+        .sidebar {
+          display: none;
+        }
+        .main {
+          margin-left: 0;
+        }
+        .cards {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <div class="header">
+      <div class="logo">
+        <img src="https://s.amizone.net/login-files/amizone-logo.png" alt="" />
+      </div>
+      <div class="header-title">Amity University Kolkata</div>
+      <div class="header-icons">
+        <i class="fa fa-bell"></i>
+        <i class="fa fa-envelope"></i>
+        <i class="fa fa-gear"></i>
+        <i class="fa fa-calendar"></i>
+      </div>
+      <div class="profile">
+        <img src="./profileimage.png" alt="" />
+        <div>Mr ANIKET SEN<br /><small>A9081125043</small></div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <ul>
+        <li class="active"><i class="fa fa-home"></i>Home</li>
+        <li><i class="fa fa-calendar"></i>My Calendar</li>
+        <li><i class="fa fa-list"></i>APW</li>
+        <li><i class="fa fa-list"></i>SAP</li>
+        <li><i class="fa fa-book"></i>My Courses</li>
+        <li><i class="fa fa-angle-down"></i>Summer Sem</li>
+        <li><i class="fa fa-edit"></i>Registration</li>
+        <li><i class="fa fa-clock"></i>Time Table</li>
+        <li><i class="fa fa-user"></i>My Faculty</li>
+        <li><i class="fa fa-angle-down"></i>Examination</li>
+        <li><i class="fa fa-briefcase"></i>ATPC Placement</li>
+        <li><i class="fa fa-file"></i>Student Document</li>
+        <li><i class="fa fa-credit-card"></i>Fee Details</li>
+      </ul>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+      <div class="cards">
+        <div class="card attendance-card">
+          <h3>Attendance</h3>
+          <p>75% to 85%</p>
+          <p>Below 75%</p>
+        </div>
+        <div class="card fee-card">
+          <h3>Fee Due 132000.00</h3>
+          <p>Due date: 22/12/2025</p>
+          <p>Late Fee Rs.100/- per day upto 29/11/2025</p>
+          <p>Late Fee Rs.7500/- upto 18/01/2026</p>
+          <p>Late Fee Rs.15000/- upto 19/01/2026</p>
+          <button class="btn">Pay Now</button>
+        </div>
+        <div class="card achievement-card">
+          <h3>Achievement</h3>
+          <button class="btn">Add Achievement</button>
+        </div>
+        <div class="card cgpa-card">
+          <h3>CGPA : 0.00</h3>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="section">
+          <div class="section-header">My Classes</div>
+          <div class="section-body" style="height: 260px"></div>
+        </div>
+        <div class="section">
+          <div class="section-header">My Attendance</div>
+          <div class="section-body">
+            <div class="attendance-row">
+              <span>ECON147</span><span>19/43</span>
+              <div class="circle">44%</div>
+            </div>
+            <div class="attendance-row">
+              <span>LAW674</span><span>10/28</span>
+              <div class="circle">35%</div>
+            </div>
+            <div class="attendance-row">
+              <span>ELAW103</span><span>25/30</span>
+              <div class="circle" style="border-color: var(--green)">83%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="section">
+          <div class="section-header">Amity Central Library (OPAC)</div>
+          <div class="section-body">User-id: 12776327</div>
+        </div>
+        <div class="section">
+          <div class="section-header">Email</div>
+          <div class="section-body">aniket.sengupta@s.amity.edu</div>
+        </div>
+        <div class="section">
+          <div class="section-header">LMS</div>
+          <div class="section-body">2025-2026</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="section">
+          <div class="section-header">Notices</div>
+          <div class="section-body">auk student handbook 2023-2024</div>
+        </div>
+        <div class="section">
+          <div class="section-header">Chancellor's Message</div>
+          <div class="section-body">I wish you a productive year ahead.</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
